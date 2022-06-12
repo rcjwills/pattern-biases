@@ -30,4 +30,8 @@ for i = 1:length(sst_names)
     end
 end
 
+% Note: tk_obs is not normalized the same as patterns/indices plotted with
+% plot_multivariate_model_bias_patterns.m. Run compute_tk1_tk2_trends_all.m
+% to normalize tk_obs 1 and 2. 
+
 save('/Users/rcwills/Documents/Data/projects_output_tmp/MMLEA/S2N_Patterns/tk_obs.mat','tk_obs','sst_names','slp_names')

@@ -1,4 +1,4 @@
-function [Xdisc_mean,Xdisc_anom] = plot_multivariate_model_bias_patterns(Xdisc,patternsf,ndisc,l,year1,lon,lat,scale1,scale2,ctrs1,ctrs2,title1,title2)
+function [Xdisc_mean,Xdisc_anom,normalization] = plot_multivariate_model_bias_patterns(Xdisc,patternsf,ndisc,l,year1,lon,lat,scale1,scale2,ctrs1,ctrs2,title1,title2)
 
 n = size(Xdisc,1);
 ne = n/l;
@@ -17,13 +17,14 @@ for i = is_include(end):-1:is_include(1)
     Xdisc_mean = Xdisc_mean + Xdisc(i1:i2,ndisc);
 end
 Xdisc_mean = Xdisc_mean./length(is_include);
-Xdisc_mean = Xdisc_mean./std(Xdisc_mean);
-Xdisc = Xdisc./std(Xdisc);
+normalization = std(Xdisc_mean);
+Xdisc_mean = Xdisc_mean./normalization;
+Xdisc = Xdisc./normalization;
 
 if nargin > 5
     
-    scale1 = scale1.*std(Xdisc_mean);
-    scale2 = scale2.*std(Xdisc_mean);
+    scale1 = scale1.*normalization;
+    scale2 = scale2.*normalization;
     
     figure; subplot(8,1,[1 2 3]);
     try
@@ -79,4 +80,6 @@ if nargin > 5
     xlabel('Year','fontsize',14);
     ylabel('Standard Deviations','fontsize',14);
     %xlabel('Year','fontsize',14);
+else
+    Xdisc_mean = Xdisc_mean./std(Xdisc_mean);
 end

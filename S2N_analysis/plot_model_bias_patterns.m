@@ -17,12 +17,13 @@ for i = is_include(end):-1:is_include(1)
     Xdisc_mean = Xdisc_mean + Xdisc(i1:i2,ndisc);
 end
 Xdisc_mean = Xdisc_mean./length(is_include);
-Xdisc_mean = Xdisc_mean./std(Xdisc_mean);
-Xdisc = Xdisc./std(Xdisc);
+normalization = std(Xdisc_mean);
+Xdisc_mean = Xdisc_mean./normalization;
+Xdisc = Xdisc./normalization;
 
 if nargin > 5
     figure; subplot(3,1,[1 2]);
-    field = reshape(patternsf(ndisc,:),[length(lon) length(lat)]);
+    field = reshape(patternsf(ndisc,:).*normalization,[length(lon) length(lat)]);
     plot_field_robinson_replace(lon,lat,field,ctrs); %pcontinents; set(gca,'xlim',[0 357.5]);
     set(gca,'xtick',[]); set(gca,'ytick',[]);
     if max(lat)==86

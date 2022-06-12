@@ -2,8 +2,10 @@
 load('tk_obs.mat')
 tk_obs = -tk_obs(:,1:2,:,:);
 
-ndisc = 1; [tk1_mean,tk1_anom] = plot_multivariate_model_bias_patterns(-tk,-FPs,ndisc,42,1979,LON_AXIS,LAT_AXIS,sst_scale,slp_scale,linspace(-0.4,0.4,25),linspace(-80,80,25));
-ndisc = 2; [tk2_mean,tk2_anom] = plot_multivariate_model_bias_patterns(-tk,-FPs,ndisc,42,1979,LON_AXIS,LAT_AXIS,sst_scale,slp_scale,linspace(-0.4,0.4,25),linspace(-80,80,25));
+ndisc = 1; [tk1_mean,tk1_anom,norm_tk1] = plot_multivariate_model_bias_patterns(-tk,-FPs,ndisc,42,1979,LON_AXIS,LAT_AXIS,sst_scale,slp_scale,linspace(-0.4,0.4,25),linspace(-80,80,25));
+ndisc = 2; [tk2_mean,tk2_anom,norm_tk2] = plot_multivariate_model_bias_patterns(-tk,-FPs,ndisc,42,1979,LON_AXIS,LAT_AXIS,sst_scale,slp_scale,linspace(-0.4,0.4,25),linspace(-80,80,25));
+tk_obs(:,1,:,:) = tk_obs(:,1,:,:)./norm_tk1;
+tk_obs(:,2,:,:) = tk_obs(:,2,:,:)./norm_tk2;
 
 for i = 1:size(tk1_anom,2)
     p = polyfit((1:42)',tk1_anom(:,i),1);
