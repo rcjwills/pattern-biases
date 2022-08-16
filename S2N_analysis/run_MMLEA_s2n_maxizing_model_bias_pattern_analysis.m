@@ -42,12 +42,14 @@ if strcmp(varnam,'multivariate')
     field_obs(145:288,:,:) = field./slp_scale;
     nlon = 288;
     LON_AXIS = [LON_AXIS; LON_AXIS+360];
+    name = ['16model_multivariate_ERSST5_ERA5_',label,'_',num2str(latmax),'deg'];
 else
     obs = 'ersst5';
     load([projects_output_dir,obs,'_',label,'_datamatrix.mat'])
     nt = size(xtf,1);
     field_obs = reshape(insert_cols(xtf,icol_ret,icol_disc)',[144 72 nt]);
     nlon = 144;
+    name = ['16model_ERSST5_',label,'_',num2str(latmax),'deg'];
 end
 nlat = 72;
 
@@ -171,6 +173,8 @@ Xe_f = lanczos_filter_datamatrix_trend_passthrough(Xe,cutoff);
 Ct = cov(X_tenpermodel); % only use one ensemble member from each model to compute covariance matrix
 
 [tk, FPs, fingerprints, s, pvar, pcs, EOFs, N, pvar_FPs, s_eofs, pcvec, evl, rest] = forced_pattern_analysis(X, Xe_f, truncation, scale,Ct);
+
+save([name,'_S2N_preprocessed.mat'],'X','X_obs','X_tenpermodel','Xe','evl','icol_disc','icol_ret','is_tenpermodel','nt','ntotal','pcvec','rest','scale','time')
 
 % note that 's' is not signal-to-noise ratio, because Ct is computed from
 % X_onepermodel while X is used in forced_pattern_analysis
