@@ -1,11 +1,11 @@
 function [rescaling] = trend_comparison_figures(lon,lat,trend_lens,trend_obs,ctrs,ctrs_std,rescale,model_name,obs_name,label,trend_std_input)
 
-save_flag = 1;
+save_flag = 0;
 
 if max(ctrs)>20
-    save_dir = '/Users/rcwills/Shared/all_figures/2021_Model_Bias_Analysis/MMLEA_trends/SLP/';
+    save_dir = '/Specify Save Directory for SLP Figures/';
 else
-    save_dir = '/Users/rcwills/Shared/all_figures/2021_Model_Bias_Analysis/MMLEA_trends/SST/';
+    save_dir = '/Specify Save Directory for SST Figures/';
 end
 
 if rescale==2 % SST, rescale global mean of models to match global mean of observations
