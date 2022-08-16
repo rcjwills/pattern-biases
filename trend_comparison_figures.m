@@ -95,11 +95,7 @@ hold on; contourm(lat,lon,field',[2 2],'k')
 hold on; contourm(lat,lon,field',[-2 -2],'k')
 title(model_name)
 annotation('textbox',[0.27 0.83 .1 .1],'String',['N = ',num2str(size(trend_lens,3))],'fontsize',14,'EdgeColor','none')
-if rescale==2 %% SST
-    field(abs(Y)>=50) = nan;
-else
-    field(abs(Y)>=latlim(2)) = nan;
-end
+field(abs(Y)>=60) = nan; % only compute RMSE over [60S 60N]
 annotation('textbox',[0.61 0.83 .25 .1],'String',['RMSE = ',num2str(round(sqrt(global_mean(lon,lat,field.^2)),2)),' \sigma'],'fontsize',14,'EdgeColor','none')
 if save_flag==1
     saveas(gcf,[save_dir,'stdev_',model_name,'_',obs_name,'_',label,'.eps'],'epsc')
